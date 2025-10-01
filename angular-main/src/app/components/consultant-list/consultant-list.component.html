@@ -1,0 +1,59 @@
+<div class="consultant-list-container">
+  <div class="list-header">
+    <h1>👥 Consultores</h1>
+    <p class="subtitle">
+      {{ filteredConsultants.length }} consultor(es) encontrado(s)
+    </p>
+  </div>
+
+  <div class="filters-section">
+    <div class="search-box">
+      <input
+        type="text"
+        [(ngModel)]="searchTerm"
+        (ngModelChange)="onSearchChange()"
+        placeholder="🔍 Buscar por nome, email ou especialidade..."
+        class="search-input"
+      />
+    </div>
+
+    <div class="filter-buttons">
+      <button
+        [class.active]="filterStatus === 'all'"
+        (click)="filterStatus = 'all'; onFilterChange()"
+        class="filter-btn"
+      >
+        Todos
+      </button>
+      <button
+        [class.active]="filterStatus === 'active'"
+        (click)="filterStatus = 'active'; onFilterChange()"
+        class="filter-btn"
+      >
+        ✓ Ativos
+      </button>
+      <button
+        [class.active]="filterStatus === 'inactive'"
+        (click)="filterStatus = 'inactive'; onFilterChange()"
+        class="filter-btn"
+      >
+        ✗ Inativos
+      </button>
+    </div>
+  </div>
+
+  <div class="consultants-grid" *ngIf="filteredConsultants.length > 0">
+    <app-consultant-card
+      *ngFor="let consultant of filteredConsultants"
+      [consultant]="consultant"
+      [isAdmin]="isAdmin"
+      (deleteConsultant)="handleDeleteConsultant($event)"
+    ></app-consultant-card>
+  </div>
+
+  <div class="empty-state" *ngIf="filteredConsultants.length === 0">
+    <div class="empty-icon">🔍</div>
+    <h3>Nenhum consultor encontrado</h3>
+    <p>Tente ajustar os filtros de busca</p>
+  </div>
+</div>

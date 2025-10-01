@@ -1,0 +1,37 @@
+<div
+  class="consultant-card"
+  [class.inactive]="consultant.status === 'inactive'"
+>
+  <div class="card-header">
+    <h3>{{ consultant.name }}</h3>
+    <span class="status-badge" [class.active]="consultant.status === 'active'">
+      {{ consultant.status === "active" ? "✓ Ativo" : "✗ Inativo" }}
+    </span>
+  </div>
+
+  <div class="card-body">
+    <div class="info-row">
+      <span class="icon">📧</span>
+      <span>{{ consultant.email }}</span>
+    </div>
+    <div class="info-row">
+      <span class="icon">📱</span>
+      <span>{{ consultant.phone }}</span>
+    </div>
+    <div class="info-row">
+      <span class="icon">💼</span>
+      <span>{{ consultant.specialty }}</span>
+    </div>
+    <div class="info-row">
+      <span class="icon">⭐</span>
+      <span>{{ consultant.experience }} anos de experiência</span>
+    </div>
+  </div>
+
+  <div class="card-actions" *ngIf="isAdmin">
+    <button [routerLink]="['/consultant/edit', consultant.id]" class="btn-edit">
+      ✏️ Editar
+    </button>
+    <button (click)="onDelete()" class="btn-delete">🗑️ Excluir</button>
+  </div>
+</div>

@@ -1,0 +1,147 @@
+<div class="form-container">
+  <div class="form-card">
+    <div class="form-header">
+      <h1>{{ isEditMode ? "✏️ Editar Consultor" : "➕ Novo Consultor" }}</h1>
+      <p>
+        {{
+          isEditMode
+            ? "Atualize as informações do consultor"
+            : "Preencha os dados do novo consultor"
+        }}
+      </p>
+    </div>
+
+    <form [formGroup]="consultantForm" (ngSubmit)="onSubmit()">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="name">Nome Completo *</label>
+          <input
+            type="text"
+            id="name"
+            formControlName="name"
+            class="form-control"
+            [class.invalid]="submitted && f['name'].errors"
+            placeholder="Ex: João Silva"
+          />
+          <div *ngIf="submitted && f['name'].errors" class="error-message">
+            <span *ngIf="f['name'].errors['required']">Nome é obrigatório</span>
+            <span *ngIf="f['name'].errors['minlength']"
+              >Nome deve ter no mínimo 3 caracteres</span
+            >
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email *</label>
+          <input
+            type="email"
+            id="email"
+            formControlName="email"
+            class="form-control"
+            [class.invalid]="submitted && f['email'].errors"
+            placeholder="Ex: joao@empresa.com"
+          />
+          <div *ngIf="submitted && f['email'].errors" class="error-message">
+            <span *ngIf="f['email'].errors['required']"
+              >Email é obrigatório</span
+            >
+            <span *ngIf="f['email'].errors['email']">Email inválido</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="phone">Telefone *</label>
+          <input
+            type="text"
+            id="phone"
+            formControlName="phone"
+            (input)="formatPhone($event)"
+            class="form-control"
+            [class.invalid]="submitted && f['phone'].errors"
+            placeholder="(11) 98765-4321"
+          />
+          <div *ngIf="submitted && f['phone'].errors" class="error-message">
+            <span *ngIf="f['phone'].errors['required']"
+              >Telefone é obrigatório</span
+            >
+            <span *ngIf="f['phone'].errors['pattern']"
+              >Formato inválido: (11) 98765-4321</span
+            >
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="specialty">Especialidade *</label>
+          <input
+            type="text"
+            id="specialty"
+            formControlName="specialty"
+            class="form-control"
+            [class.invalid]="submitted && f['specialty'].errors"
+            placeholder="Ex: Desenvolvimento Frontend"
+          />
+          <div *ngIf="submitted && f['specialty'].errors" class="error-message">
+            <span *ngIf="f['specialty'].errors['required']"
+              >Especialidade é obrigatória</span
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="experience">Anos de Experiência *</label>
+          <input
+            type="number"
+            id="experience"
+            formControlName="experience"
+            class="form-control"
+            [class.invalid]="submitted && f['experience'].errors"
+            placeholder="Ex: 5"
+            min="0"
+            max="50"
+          />
+          <div
+            *ngIf="submitted && f['experience'].errors"
+            class="error-message"
+          >
+            <span *ngIf="f['experience'].errors['required']"
+              >Experiência é obrigatória</span
+            >
+            <span *ngIf="f['experience'].errors['min']">Mínimo de 0 anos</span>
+            <span *ngIf="f['experience'].errors['max']">Máximo de 50 anos</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="status">Status *</label>
+          <select
+            id="status"
+            formControlName="status"
+            class="form-control"
+            [class.invalid]="submitted && f['status'].errors"
+          >
+            <option value="active">Ativo</option>
+            <option value="inactive">Inativo</option>
+          </select>
+          <div *ngIf="submitted && f['status'].errors" class="error-message">
+            <span *ngIf="f['status'].errors['required']"
+              >Status é obrigatório</span
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" (click)="onCancel()" class="btn-cancel">
+          Cancelar
+        </button>
+        <button type="submit" class="btn-submit">
+          {{ isEditMode ? "Atualizar" : "Cadastrar" }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

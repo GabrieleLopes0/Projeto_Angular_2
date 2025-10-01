@@ -1,0 +1,10 @@
+{
+  "buildCommand": "npm run build:prod",
+  "outputDirectory": "dist/projeto_angular_2",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
